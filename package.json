@@ -1,0 +1,15 @@
+{
+  "name": "type-locales",
+  "version": "1.0.0",
+  "description": "A simple tool for typing your locales",
+  "main": "index.js",
+  "bin": "index.js",
+  "type": "module",
+  "keywords": [
+    "i18n",
+    "locales",
+    "typescript"
+  ],
+  "author": "eliyya",
+  "license": "MIT"
+}
