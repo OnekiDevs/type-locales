@@ -1,6 +1,5 @@
 // #!/usr/bin/env node
 import { readdir, writeFile } from 'node:fs/promises'
-import merge from 'just-merge'
 
 const cwd = process.cwd()
 const files = (await readdir(cwd)).filter((file) => file.endsWith('.json'))
