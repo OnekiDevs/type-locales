@@ -1,4 +1,4 @@
-// #!/usr/bin/env node
+#!/usr/bin/env node
 import { readdir, writeFile } from 'node:fs/promises'
 
 const cwd = process.cwd()
