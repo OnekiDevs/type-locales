@@ -10,10 +10,9 @@ for (const file of files) {
     jsons.push({ locale: file.split('.')[0], value: json.default })
 }
 
-let types_generated = 'export const keys: '
 const typeBase = merge({}, ...jsons.map(({ value }) => value))
 const [ts, js] = typeGenerator(typeBase)
-types_generated += ts + ' = ' + js
+let types_generated = `export default ${js} as ${ts}`
 await writeFile(`${cwd}/locales.ts`, types_generated)
 
 /**
