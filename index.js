@@ -30,7 +30,7 @@ function typeGenerator(obj, tab = 2, check = []) {
             let isOptional = false
             for (const { value, locale } of jsons) {
                 const json = getNestedObject(value, check)
-                if (!json[key]) {
+                if (!json?.[key]) {
                     console.warn(`\x1b[33mWARNING:\x1b[0m key \x1b[32m"${[...check, key].join('.')}"\x1b[0m not found in \x1b[32m"${locale}.json"\x1b[0m`)
                     isOptional = true
                 }
@@ -39,7 +39,7 @@ function typeGenerator(obj, tab = 2, check = []) {
             type += `${' '.repeat(tab)}${key}${isOptional ? '?' : ''}: string\n`
         } else if (typeof obj[key] === 'object') {
             try {
-                const mergeds = merge({}, ...jsons.map((j) => getNestedObject(j.value, [...check, key])))
+                const mergeds = merge({}, ...jsons.map((j) => getNestedObject(j.value, [...check, key])).filter(j => j !== undefined))
                 const [t, o] = typeGenerator(mergeds, tab + 2, [...check, key])
                 type += `${' '.repeat(tab)}${key}: ${t}\n`
                 object += `${' '.repeat(tab)}${key}: ${o},\n`
@@ -51,7 +51,7 @@ function typeGenerator(obj, tab = 2, check = []) {
                         for (const k in json) b[k] = typeof json[k]
                     } else
                         for (const k in json)
-                            if (json[k] !== undefined && b[k] !== undefined && typeof json[k] !== typeof b[k]) {
+                            if (typeof json[k] !== typeof b[k]) {
                                 console.error(
                                     `\x1b[31mERROR:\x1b[0m: key \x1b[32m"${[...check, key].join('.')}"\x1b[0m type don't match in \x1b[32m"${locale}.json"\x1b[0m`,
                                 )
