@@ -51,7 +51,7 @@ function typeGenerator(obj, tab = 2, check = []) {
                         for (const k in json) b[k] = typeof json[k]
                     } else
                         for (const k in json)
-                            if (typeof json[k] !== typeof b[k]) {
+                            if (json[k] !== undefined && b[k] !== undefined && typeof json[k] !== typeof b[k]) {
                                 console.error(
                                     `\x1b[31mERROR:\x1b[0m: key \x1b[32m"${[...check, key].join('.')}"\x1b[0m type don't match in \x1b[32m"${locale}.json"\x1b[0m`,
                                 )
