@@ -30,7 +30,7 @@ function typeGenerator(obj, tab = 2, check = []) {
             let isOptional = false
             for (const { value, locale } of jsons) {
                 const json = getNestedObject(value, check)
-                if (!json[key]) {
+                if (!json?.[key]) {
                     console.warn(`\x1b[33mWARNING:\x1b[0m key \x1b[32m"${[...check, key].join('.')}"\x1b[0m not found in \x1b[32m"${locale}.json"\x1b[0m`)
                     isOptional = true
                 }
