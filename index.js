@@ -12,7 +12,7 @@ for (const file of files) {
 
 const typeBase = merge({}, ...jsons.map(({ value }) => value))
 const [ts, js] = typeGenerator(typeBase)
-let types_generated = `export default ${js} as ${ts}`
+let types_generated = `export default ${js} satisfies ${ts}`
 await writeFile(`${cwd}/locales.ts`, types_generated)
 
 /**
