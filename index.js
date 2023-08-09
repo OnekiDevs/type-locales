@@ -35,7 +35,7 @@ function typeGenerator(obj, tab = 2, check = []) {
                     isOptional = true
                 }
             }
-            object += `${' '.repeat(tab)}${key}: "${[...check, key].join('.')}",\n`
+            object += `${' '.repeat(tab)}'${key}': "${[...check, key].join('.')}",\n`
             type += `${' '.repeat(tab)}${key}${isOptional ? '?' : ''}: string\n`
         } else if (typeof obj[key] === 'object') {
             try {
@@ -50,7 +50,7 @@ function typeGenerator(obj, tab = 2, check = []) {
                 const mergeds = merge({}, ...nested.map(j => j.value).filter(j => j !== undefined))
                 const [t, o] = typeGenerator(mergeds, tab + 2, [...check, key])
                 type += `${' '.repeat(tab)}${key}${isOptional ? '?' : ''}: ${t}\n`
-                object += `${' '.repeat(tab)}${key}: ${o},\n`
+                object += `${' '.repeat(tab)}'${key}': ${o},\n`
             } catch (error) {
                 const b = {}
                 for (const { value, locale } of jsons) {
