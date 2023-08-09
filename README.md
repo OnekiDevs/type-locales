@@ -20,10 +20,11 @@ And run the tool
 npx type-locales
 ```
 
-will generate a local.ts file with the keys that you can use on your i18n
+will generate a locales.ts file with the keys that you can use on your i18n with intelisence autocomplete
 ```
 .
 ├── locales
+│   ├── locales.ts
 │   ├── en.json
 │   └── es.json
 └── src
@@ -32,7 +33,7 @@ will generate a local.ts file with the keys that you can use on your i18n
 
 An example
 ```js
-import { keys } from '../locales/locales'
+import keys from '../locales/locales'
 import i18n from 'i18n'
 
 console.log(i18n.__(keys.say.hello))
