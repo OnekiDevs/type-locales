@@ -1,15 +1,31 @@
 {
   "name": "type-locales",
-  "version": "1.1.1",
-  "description": "A simple tool for typing your locales",
-  "main": "index.js",
-  "bin": "index.js",
+  "version": "2.0.0",
+  "description": "A simple tool for typing your locales and a util for easy manage of i18n with typescript",
+  "main": "build/mod.js",
+  "bin": "build/cli.js",
+  "types": "build/mod.d.ts",
   "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
   "keywords": [
     "i18n",
     "locales",
     "typescript"
   ],
   "author": "eliyya",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "commander": "12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.19",
+    "@types/i18n": "^0.13.10",
+    "typescript": "5.3.3",
+    "nodemon": "^3.0.3"
+  },
+  "peerDependencies": {
+    "i18n": "^0.15.0"
+  }
 }
