@@ -68,14 +68,12 @@ console.log(
 ```
 
 ## Why?
-
-i18n es una herramienta maravillosa, pero tiene un problema, las frases a traducir se manejan en ficheros externos y estaticos, lo que facilita muchas cosas menos el DX a la hora de intentar recordar las claves y sus parametros a remplazar. Esta herramienta revisa todos tus ficheros json y genera un objeto tipado el cual podras importar para usar el autocompletado y asi no tener que recordar y revisar los ficheros de traduccion.
+i18n is a wonderful tool, but it has a problem, the phrases to translate are handled in external and static files, which makes it easy to do many things except the DX when trying to remember the keys and their parameters to replace. This tool checks all your json files and generates a typed object which you can import to use the autocomplete so you don't have to remember and check the translation files.
 
 ## The cli
+The biggest magic of this tool is in its cli, which is where you can generate the code needed to have the wonderful type autocompletion.
 
-La mayor magia de esta herramienta se encuentra en su cli, que es con el que podras generar el codigo necesario para poder tener el maravilloso autocompletado por tipos.
-
-puedes usar `npx type-locales --help` para ver la ayuda
+You can use `npx type-locals --help` to see the help
 ```sh
 Usage: type-locales [path] [options]
 
@@ -98,23 +96,23 @@ Options:
 ```
 
 ### \[path\]
-Especifica la ruta de los ficheros json
+Specifies the path to the json files
 
 ### -o --output
-Especifica el fichero de salida `-o src/keys.ts`, por defecto lo genera en `./locales.ts`
+Specifies the output file `-or src/keys.ts`, by default it is generated in `./locals.ts`.
 
 ### -l --lang
-Especifica el lenguaje que generara, entre json, js y ts, por defecto es ts
-por ejemplo, si tu proyecto no usa typescript, puede generar un fichero js con `-l js`. La herramienta se encargara de tiparlo usando JSDoc
+Specifies the language to generate, between json, js and ts, by default it is ts
+for example, if your project does not use typescript, you can generate a js file with `-l js`. The tool will take care of typing it using JSDoc
 
 ### -m --mapping
-Genera el mapping para utilizar el metodo `Translator`. Por defecto esta activado para mejorar el DX con los utils, pero se puede desactivar si no pretendes usar tus propios metodos o los nativos de i18n con `-m false`
+Generates the mapping to use the `Translator` method. By default this is enabled to improve DX with utils, but you can disable it if you don't intend to use your own or i18n native methods with `-m false`.
 
 ### -i --indent
-Cambia la indentacion del fichero generado con `-i 4` por ejemplo, por defecto esta en 2
+Change the indentation of the generated file with `-i 4` for example, by default it is set to 2
 
 ### --semi
-Activa o desactiva el uso del `;` en el fichero generado, por defecto esta desactivado
+Enables or disables the use of `;` in the generated file, by default it is disabled.
 
 ### --no-typing
 Compatible con `-l ts` y `-l js`, omite la creacion de tipos y genera solo el objeto con las keys disponibles. No es compatible con la opcion `--strict`
