@@ -1,6 +1,6 @@
 {
   "name": "type-locales",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "A simple tool for typing your locales and a util for easy manage of i18n with typescript",
   "main": "build/mod.js",
   "bin": "build/cli.js",
@@ -27,5 +27,8 @@
   },
   "peerDependencies": {
     "i18n": "^0.15.0"
+  },
+  "engines": {
+    "node": "^20"
   }
 }
