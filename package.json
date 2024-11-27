@@ -17,18 +17,21 @@
   "author": "eliyya",
   "license": "MIT",
   "dependencies": {
-    "commander": "12.0.0"
+    "commander": "12.1.0"
   },
   "devDependencies": {
-    "@types/node": "20.11.19",
-    "@types/i18n": "^0.13.10",
-    "typescript": "5.3.3",
-    "nodemon": "^3.0.3"
+    "@eslint/js": "^9.15.0",
+    "@types/i18n": "^0.13.12",
+    "@types/node": "22.10.0",
+    "eslint": "^9.15.0",
+    "i18n": "^0.15.1",
+    "typescript": "5.7.2",
+    "typescript-eslint": "^8.16.0"
   },
   "peerDependencies": {
-    "i18n": "^0.15.0"
+    "i18n": "^0.15.1"
   },
   "engines": {
-    "node": "^20"
+    "node": ">=20.11"
   }
 }

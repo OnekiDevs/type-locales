@@ -1,0 +1,224 @@
+{
+    "------------>>>============ buttons ============<<<------------": "------------>>>============ buttons ============<<<------------",
+    "------------>>>============ commands ============<<<------------": "------------>>>============ commands ============<<<------------",
+    "uno_cmd": {
+        "updating": "Updating cards...",
+        "gg": "GG, you've won",
+        "waiting": "Waiting for players, minimum 2 required",
+        "end": "Game over\nWinner: {user}",
+        "turn": "{user}'s turn",
+        "join": "Join",
+        "start": "Start game",
+        "show": "Show cards",
+        "eat": "Eat cards",
+        "new": "Regenerate message",
+        "your_turn": "Your turn",
+        "start_out": "You must join the game first",
+        "start_no_host": "Only the host can start the game"
+    },
+    "activitie_cmd": {
+        "whotout_voice": "Enter a voice channel or specify one",
+        "reply": "Activitie `{activitie}` created in {channel}"
+    },
+    "config_cmd": {
+        "set_log": "Logs set to {channel}",
+        "remove_log": "Log removed",
+        "set_lang": "Language set to `{lang}`",
+        "set_prefix": "Set prefix to `{prefix}`",
+        "add_prefix": "`{prefix}` prefix added successfully\nNow the bot listens for `{prefixes}`",
+        "remove_prefix": "Removed prefix\nNow the bot listens `{prefixies}`",
+        "add_suggest_channel": {
+            "reply": "Channel {channel} set for {alias} suggestions",
+            "message": "This channel is now set for {alias} suggestions\nTo make a suggestion use **/suggest `channel:{alias}`**"
+        },
+        "remove_suggest_channel": {
+            "dont_exist": "There is no configured channel",
+            "reply": "Channel removed"
+        },
+        "set_suggest_channel": {
+            "reply": "Channel {channel} set for suggestions",
+            "message": "This channel is now set up for suggestions\nTo make a suggestion use **/suggest**"
+        },
+        "birthday": {
+            "set_channel": "Channel {channel} set for celebrating users birthdays",
+            "remove_channel": "You just deleted the birthday channel. From now on users won't get notified on their birthdays.",
+            "set_message": "The announcement that will be sent when it's a user's birthday has been set to: {message}"
+        },
+        "invites": {
+            "set_channel": "The channel for recieving invitations has been set to {channel}"
+        },
+        "autoroles": {
+            "create": "The group **{name}** has ccreated",
+            "added": "the roll {roll} has added in the group **{group}**",
+            "remove": "the roll {roll} has removed of the group **{group}**",
+            "remove_group": "Group deleted",
+            "displaying": "Deploying...",
+            "displaying_error": "Don't exist this group",
+            "sending_error": "I don't have the permissions to send messages in this channel",
+            "add_btn": "Roll added sucesfull",
+            "remove_btn": "Roll removed sucesfull",
+            "not_found": "autorole group not found"
+        },
+        "auto_logs": "Log `message_update` set in {message}\nLog `message_delete` set in {message}\nLog `message_attachment` set in {attachment}\nLog `invites` set in {invites}\nLog `member_update` set in {members}",
+        "set_keep_roles": "The option of keeping or keeping roles has been set to {keepRole}!",
+        "add_blacklisted_word": "The word `{word}` has been blacklisted successfully!",
+        "remove_blacklisted_word": "The word `{word}` has been removed from the blacklist successfully!",
+        "add_no_filter_channel": "The channel {channel} has been added to the list of channels where the filters are disabled",
+        "remove_no_filter_channel": "The channel {channel} has been removed from the list of channels where the filters are disabled",
+        "import_file": {
+            "reply": "The file has been imported successfully",
+            "error": "The file has not been imported successfully",
+            "invalid_file": "The file is not a valid JSON or YAML file"
+        }
+    },
+    "info_cmd": {
+        "member": {
+            "title": "{user}'s info",
+            "member_color": "Member color",
+            "user_color": "User color",
+            "boosting_from": "Boosting from",
+            "roles": "Roles"
+        }
+    },
+    "poll_cmd": {
+        "make": {
+            "dont_premium": "You can only have one survey at a time.\nUpgrade your membership to Premium or end existing Poll",
+            "havent_permissions": "I don't have permission to send messages here",
+            "new_poll": "New poll",
+            "footer": "Poll ID {id} | 0 votes | {bot} Bot v{version}",
+            "reply": "Poll sent",
+            "modal_title": "New poll",
+            "modal_title_placeholder": "Add a title to your poll",
+            "modal_title_value": "New poll",
+            "modal_context_placeholder": "Add a context to your poll",
+            "comment": "max of ''modal_options_label'' is 45 characters",
+            "modal_options_label": "Options separated by line breaks",
+            "modal_options_placeholder": "yes\nno\nmaybe"
+        },
+        "edit": {
+            "more_options": "Is necessary to add minimum 2 options",
+            "success": "created successfully",
+            "option_too_long": "One of the options is too long, it should be less than 100 words."
+        },
+        "buttons": {
+            "success": "Vote sent",
+            "already_voted": "You have already voted"
+        },
+        "finalize": "Finalized",
+        "not_found": "Poll not found"
+    },
+    "suggest_cmd": {
+        "whitout_channel": "This servrt don't have any channel configured",
+        "sent": "Sent suggest",
+        "title": "Suggest #{id}",
+        "error_permissions": "Error, The {channe} channel has estableced for the suggests but I don't have permissions in this channel. {owner}",
+        "missing_channel": "Missing channel"
+    },
+    "birthday_cmd": {
+        "set": "Your birthdate has been set to {birthday}",
+        "remove": "From now on, you will not recieve notifications in your birthday",
+        "error": "Sorry, I can't understand that. Please check that you wrote your birthday like in this example: `MONTH/DAY`",
+        "default_message": "¡Happy birthday {username}!"
+    },
+    "ban_cmd": {
+        "user_permissions": "You do not have sufficient permissions",
+        "bot_permissions": "I do not have sufficient permissions",
+        "reply": "{user} has been successfully banned"
+    },
+    "kick_cmd": {
+        "user_permissions": "You do not have sufficient permissions",
+        "reply": "{user} has been successfully kicked"
+    },
+    "timeout_cmd": {
+        "user_permissions": "You do not have sufficient permissions",
+        "reply": "{user} has been successfully aislated"
+    },
+    "feedback": {
+        "modal_placeholder": "Add the chinese translation",
+        "say_feedback": "Say your feedback",
+        "describe": "Describe your {label}",
+        "thanks": "Thanks for your feedback!"
+    },
+    "hangman": {
+        "name": "Ahorcado",
+        "description": "Guess the english word!",
+        "footer": "You have 1 minute to guess the word",
+        "send_permissiions": "I need the `Send Messages` permission to play hangman",
+        "manage_permissions": "I need the `Manage Messages` permission to play hangman correctly",
+        "already_guessed": "You already guessed that letter!",
+        "used": "letters used",
+        "won": "You won!",
+        "won_message": "You guessed the word!",
+        "lost": "You lost!",
+        "lost_message": "You didn't guess the word!",
+        "timeout": "Time out!"
+    },
+    "------------>>>============ events ============<<<------------": "------------>>>============ events ============<<<------------",
+    "invites_event": {
+        "default_message": "{invited} has joined the server! *He has been by {inviter} **Total invites**: {invites}*",
+        "cant_find_inviter": "{invited} has joined the server. `I couldn't figure out who invited him.`",
+        "permissions_error": "⚠️{invited} has joined the server, however, I don't have enough permissions to see who invited him.⚠️",
+        "custom_url": "{invited} has joined the server. `He has joined using the special invite URL.`"
+    },
+    "useractivitie_event": {
+        "set_channel": "The channel {channel} has been set as the channel to receive user's activitie!",
+        "nickname_change": "The user {user} just changed his nickname. **Old nickname**: {oldNickname}, **New nickname**: {newNickname}",
+        "serveravatar_change": {
+            "title": "♻️ Server's avatar update {username}",
+            "description": "The user {user} has updated his server's avatar."
+        },
+        "roles_change": {
+            "added": "The user {user} has been given the role {role}",
+            "removed": "The {role} has been removed from the user {user}"
+        }
+    },
+    "message_delete_event": {
+        "deleted": "Message deleted",
+        "in": "Delete in",
+        "on": "Deleted on",
+        "reference": "Response to"
+    },
+    "message_update_event": {
+        "edited": "Message edited",
+        "in": "Edit in",
+        "edited_on": "Edited on",
+        "written_on": "Written on",
+        "reference": "Response to"
+    },
+    "ghost_ping": {
+        "realized": "⛔ The user {ghostingUser} has ghost pinged {ghostedUser}. ⛔",
+        "warned": "The user {ghostingUser} has made his first ghost ping to the user {ghostedUser} and has been warned about it.",
+        "cant_warn": "⚠️ The user {ghostingUser} has made his first ghost ping to the user {ghostedUser}. However, I can not warn him because his role is higher than mine. ⚠️",
+        "muted": "The user {ghostingUser} has ghost pinged {ghostedUser} and has been muted because of it.",
+        "cant_mute": "⚠️ The user {ghostingUser} has ghost pinged {ghostedUser}. However, I can not mute him because his role is higher than mine. ⚠️"
+    },
+    "sanction_event": {
+        "set_channel": "The channel {channel} has been set as the channel to recieve all sanctions!",
+        "mute_user": "The user {user} has been muted by {moderator} for {time}. Reason: {reason}"
+    },
+    "attachment_event": "The user {user} has sent a attachment",
+    "------------>>>============ olds ============<<<------------": "------------>>>============ olds ============<<<------------",
+    "emoji_old": {
+        "missing": "Emoji not found",
+        "link": "Link",
+        "forget": "You forgot to mention an emoji"
+    },
+    "emote_analize_old": {
+        "start": "Starting analysis",
+        "end": "Stoping analysis"
+    },
+    "------------>>>============ commons ============<<<------------": "------------>>>============ commons ============<<<------------",
+    "footer": "{bot} Bot v{version}",
+    "premium": "Upgrade your membership to Premium to use this feature",
+    "useractivitie": {},
+    "havent_write_permissions": "I don't have enough permissions to send messages in {channel}",
+    "title": "Title",
+    "context": "Context",
+    "options": "Options",
+    "option": "option",
+    "before": "Before",
+    "after": "After",
+    "channel": "Channel",
+    "word": "Word",
+    "life": "Life"
+}
