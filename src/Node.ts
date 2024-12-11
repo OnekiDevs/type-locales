@@ -1,11 +1,11 @@
-import { readdir } from 'node:fs/promises'
+import { readdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 interface Locale {
     [key: string]: Locale | string
 }
 
-class BaseNode {
+export class BaseNode {
     protected children: Map<string, Node> = new Map()
     protected langs: Set<string> = new Set()
     protected value: string = ''
@@ -42,35 +42,69 @@ class BaseNode {
         this.checkConflict()
         return this
     }
+
+    has(langs: Set<string>) {
+        return langs.isSubsetOf(this.langs)
+    }
+
+    toJSON(): Record<string, unknown> {
+        return {
+            key: this.key,
+            children: [...this.children.values().map(v => v.toJSON())],
+        }
+    }
 }
 
-class Root extends BaseNode {
+export class Root extends BaseNode {
     constructor() {
         super('')
     }
 
     js(): Locale {
         const locale: Locale = {}
-        for (const [k, v] of this.children.entries()) {
-            Object.assign(locale, v.resolve(''))
-        }
+        for (const [k, v] of this.children.entries())
+            Object.assign(locale, { [k]: v.resolve('') })
+
         return locale
+    }
+
+    dts(): string {
+        return [
+            'export interface LocaleKeys {',
+            ...this.children.values().map(v => v.generateDTS(this.langs)),
+            '}',
+            'export default LocaleKeys',
+            'export const localeKeys: LocaleKeys',
+        ].join('\n')
     }
 }
 
-class Node extends BaseNode {
+export class Node extends BaseNode {
     resolve(parent: string): Locale | string {
         const kid = !parent.length ? this.key : `${parent}.${this.key}`
-        console.log(kid)
-
-        if (this.value) {
-            return kid
-        }
+        if (this.value) return kid
         const locale: Locale = {}
-        for (const [k, v] of this.children.entries()) {
-            Object.assign(locale, v.resolve(kid))
-        }
+        for (const [k, v] of this.children.entries())
+            Object.assign(locale, { [k]: v.resolve(kid) })
+
         return locale
+    }
+
+    generateDTS(langs: Set<string>, kid = '', tab = 4) {
+        let out = `${' '.repeat(tab)}'${this.key}'`
+        if (!this.has(langs)) out += '?'
+        out += ': '
+        const nkid = kid.length ? kid + '.' + this.key : this.key
+        if (!this.children.size) out += `\`${this.resolve(kid)}\``
+        else
+            out += [
+                '{',
+                ...this.children
+                    .values()
+                    .map(v => v.generateDTS(langs, nkid, tab + 4)),
+                ' '.repeat(tab) + '}',
+            ].join('\n')
+        return out
     }
 }
 
@@ -87,8 +121,15 @@ async function exec() {
             }
         )
         root.process(file.name.replace('.json', ''), lang)
-        console.log(root.js())
-        break
     }
+    await writeFile(
+        'test.js',
+        `export const localeKeys = ${JSON.stringify(
+            root.js(),
+            null,
+            4,
+        )}\nexport default localeKeys`,
+    )
+    await writeFile('test.d.ts', root.dts())
 }
 exec()
