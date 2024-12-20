@@ -33,7 +33,7 @@
         },
         "remove_suggest_channel": {
             "dont_exist": "There is no configured channel",
-            "reply": "Channel removed"
+            "reply": "Channel removed "
         },
         "set_suggest_channel": {
             "reply": "Channel {channel} set for suggestions",

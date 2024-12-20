@@ -1,7 +1,4 @@
-import { readdir, writeFile } from 'node:fs/promises'
-import { join } from 'node:path'
-
-interface Locale {
+export interface Locale {
     [key: string]: Locale | string
 }
 
@@ -19,10 +16,12 @@ export class BaseNode {
         return !!(this.children.size && this.value)
     }
 
-    checkConflict() {
+    checkConflict(lang: string = '') {
         if (this.hasConflict()) {
             throw new Error(
-                `[type-locales] Conflict encountered at key: ${this.key}`,
+                `[type-locales] Conflict encountered${
+                    lang ? ` in the file "${lang}.json"` : ''
+                } at key: ${this.key}`,
             )
         }
     }
@@ -31,7 +30,7 @@ export class BaseNode {
         this.langs.add(id)
         if (typeof locale === 'string') {
             this.value = locale
-            this.checkConflict()
+            this.checkConflict(id)
             return this
         }
         for (const [k, v] of Object.entries(locale)) {
@@ -39,7 +38,7 @@ export class BaseNode {
             this.children.set(k, child)
             child.process(id, v)
         }
-        this.checkConflict()
+        this.checkConflict(id)
         return this
     }
 
@@ -107,29 +106,3 @@ export class Node extends BaseNode {
         return out
     }
 }
-
-async function exec() {
-    const dir = await readdir('./lang', { withFileTypes: true })
-    const root = new Root()
-    for (const file of dir.filter(
-        f => f.isFile() && f.name.endsWith('.json'),
-    )) {
-        const { default: lang } = await import(
-            'file://' + join(process.cwd(), 'lang', file.name),
-            {
-                with: { type: 'json' },
-            }
-        )
-        root.process(file.name.replace('.json', ''), lang)
-    }
-    await writeFile(
-        'test.js',
-        `export const localeKeys = ${JSON.stringify(
-            root.js(),
-            null,
-            4,
-        )}\nexport default localeKeys`,
-    )
-    await writeFile('test.d.ts', root.dts())
-}
-exec()
