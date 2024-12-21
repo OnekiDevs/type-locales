@@ -5,3 +5,6 @@ pnpm-lock.yaml
 tsconfig.json
 .prettierrc
 eslint.config.js
+lang
+get_changelog.sh
+CHANGELOG.md

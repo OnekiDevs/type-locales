@@ -10,4 +10,4 @@ All notable changes to this project will be documented in this file.
 
 ## Breaking Changues
 
--   **chanche cli options**
+-   **chanche cli options** The only available options are --watch (-w), --version (-v) and --quiet (-q)

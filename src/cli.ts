@@ -1,7 +1,7 @@
-import { readdir, writeFile, watch } from 'fs/promises'
+import { readdir, writeFile, watch, readFile } from 'node:fs/promises'
 import { parseArgs } from 'node:util'
+import { join } from 'node:path'
 import { Root } from './Tree.js'
-import { join } from 'path'
 
 export async function cli({
     INPUT_ROOT,
@@ -17,11 +17,10 @@ export async function cli({
     for (const file of dir.filter(
         f => f.isFile() && f.name.endsWith('.json'),
     )) {
-        const { default: lang } = await import(
-            'file://' + join(process.cwd(), INPUT_ROOT, file.name),
-            {
-                with: { type: 'json' },
-            }
+        const lang = JSON.parse(
+            await readFile(join(process.cwd(), INPUT_ROOT, file.name), {
+                encoding: 'utf-8',
+            }),
         )
         root.process(file.name.replace('.json', ''), lang)
     }
@@ -36,85 +35,139 @@ export async function cli({
     await writeFile(OUTPUT_DTS, root.dts())
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function debounce<T extends (...args: any[]) => Promise<void>>(
-    func: T,
-    wait: number,
-): (...args: Parameters<T>) => Promise<void> {
-    let timeoutId: NodeJS.Timeout | null = null
-    return (...args: Parameters<T>): Promise<void> => {
-        const { promise, resolve } = Promise.withResolvers()
-        if (timeoutId !== null) clearTimeout(timeoutId)
-        timeoutId = setTimeout(() => func(...args).then(resolve), wait)
-        return promise as Promise<void>
-    }
-}
-
-const debounceCli = debounce(cli, 200)
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function wrap<T extends (...args: any) => unknown, K = ReturnType<T>>(
-    func: T,
-): [Error, null] | [null, K] {
-    try {
-        return [null, func() as K]
-    } catch (error) {
-        return [error as Error, null]
-    }
-}
-
 if (
     import.meta.url.replace(/\\/g, '/') ===
     `file:///${process.argv[1]}`.replace(/\\/g, '/')
 ) {
-    let args = { positionals: [''], values: { watch: false, quiet: false } }
-    try {
-        args = parseArgs({
-            args: process.argv.slice(2),
-            options: {
-                quiet: {
-                    type: 'boolean',
-                    default: false,
-                    short: 'q',
-                    multiple: false,
-                },
-                watch: {
-                    type: 'boolean',
-                    default: false,
-                    short: 'w',
-                    multiple: false,
-                },
-            },
-            allowPositionals: true,
-        })
-        // eslint-disable-next-line no-empty
-    } catch {}
-
+    let timeoutId: NodeJS.Timeout | null = null
     const {
         positionals: [input],
-        values: { watch: WATCH, quiet: QUIET },
-    } = args!
+        values: { watch: WATCH, quiet: QUIET, version, help },
+    } = parseArgs({
+        args: process.argv.slice(2),
+        options: {
+            quiet: {
+                type: 'boolean',
+                default: false,
+                short: 'q',
+                multiple: false,
+            },
+            watch: {
+                type: 'boolean',
+                default: false,
+                short: 'w',
+                multiple: false,
+            },
+            version: {
+                type: 'boolean',
+                default: false,
+                short: 'v',
+                multiple: false,
+            },
+            help: {
+                type: 'boolean',
+                default: false,
+                short: 'h',
+                multiple: false,
+            },
+        },
+        allowPositionals: true,
+        strict: false,
+    })
 
-    const runCli = async () => {
-        try {
-            await debounceCli({ INPUT_ROOT, OUTPUT_JS, OUTPUT_DTS })
-            if (!QUIET) console.log('[type-routes] Routes typed')
-        } catch (error) {
-            console.log('[type-routes] Error encountered')
-            if (!QUIET) console.log((error as Error).message)
-        }
+    if (version) {
+        await import(import.meta.resolve('../package.json'), {
+            with: { type: 'json' },
+        }).then(i => {
+            console.log(`type-routes v${i.default.version}`)
+        })
+        process.exit(0)
     }
 
-    const INPUT_ROOT = input || './langs'
+    if (help) {
+        console.log(`
+Usage: type-locales [path] [options]
+
+Arguments:
+  path                   path to translate
+
+Options:
+  -v, --version          output the version number
+  -w --watch             watch for changes in the input directory (default: false)
+  -q, --quiet            quiet mode (default: false)
+  -h, --help             display help for command`)
+        process.exit(0)
+    }
+
+    const runCli = () => {
+        const { promise, resolve } = Promise.withResolvers<void>()
+        if (timeoutId !== null) {
+            clearTimeout(timeoutId)
+        }
+        timeoutId = setTimeout(() => {
+            cli({
+                INPUT_ROOT,
+                OUTPUT_JS,
+                OUTPUT_DTS,
+            })
+                .then(() => {
+                    if (!QUIET) console.log('[type-routes] Routes typed')
+                    resolve()
+                })
+                .catch(error => {
+                    if (
+                        (error as Error).message.includes(
+                            'no such file or directory',
+                        ) &&
+                        !QUIET
+                    )
+                        console.error(
+                            `[type-routes] Error: ${INPUT_ROOT} does not exist or is not a directory`,
+                        )
+                    if (
+                        (error as Error).message.includes(
+                            'Conflict encountered',
+                        ) &&
+                        !QUIET
+                    ) {
+                        console.error(error.message)
+                        resolve()
+                    }
+                })
+        }, 500)
+        return promise
+    }
+
+    const INPUT_ROOT = input || './locales'
     const OUTPUT_JS = './build/keys.js'
     const OUTPUT_DTS = './build/keys.d.ts'
 
-    runCli()
-    if (WATCH) {
-        const watcher = watch(INPUT_ROOT)
-        for await (const event of watcher) {
-            if (!event.filename?.endsWith('.json')) continue
-            runCli()
+    const runWatch = async () => {
+        if (WATCH) {
+            try {
+                const watcher = watch(INPUT_ROOT)
+                for await (const event of watcher) {
+                    if (!event.filename?.endsWith('.json')) continue
+                    runCli().catch(() => void 0)
+                }
+            } catch (error) {
+                if (
+                    (error as Error).message.includes(
+                        'no such file or directory',
+                    )
+                ) {
+                    console.error(
+                        `[type-routes] Error: ${INPUT_ROOT} does not exist or is not a directory`,
+                    )
+                }
+            }
         }
     }
+
+    runCli()
+        .then(runWatch)
+        .catch(error => {
+            if ((error as Error).message.includes('Conflict encountered'))
+                runWatch()
+        })
 }

@@ -11,6 +11,10 @@
       "import": "./build/mod.js"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eliyya/type-locales.git"
+  },
   "scripts": {
     "build": "tsc"
   },
