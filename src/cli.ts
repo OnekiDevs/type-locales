@@ -1,7 +1,8 @@
-import { readdir, writeFile, watch, readFile } from 'node:fs/promises'
+import { readdir, writeFile, watch, readFile, realpath } from 'node:fs/promises'
 import { parseArgs } from 'node:util'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
 import { Root } from './Tree.js'
+import { fileURLToPath } from 'node:url'
 
 export async function cli({
     INPUT_ROOT,
@@ -36,8 +37,8 @@ export async function cli({
 }
 
 if (
-    import.meta.url.replace(/\\/g, '/') ===
-    `file:///${process.argv[1]}`.replace(/\\/g, '/')
+    (await realpath(fileURLToPath(import.meta.url))) ===
+    (await realpath(process.argv[1]))
 ) {
     let timeoutId: NodeJS.Timeout | null = null
     const {
@@ -139,8 +140,14 @@ Options:
     }
 
     const INPUT_ROOT = input || './locales'
-    const OUTPUT_JS = './build/keys.js'
-    const OUTPUT_DTS = './build/keys.d.ts'
+    const OUTPUT_JS = join(
+        dirname(await realpath(fileURLToPath(import.meta.url))),
+        'keys.js',
+    )
+    const OUTPUT_DTS = join(
+        dirname(await realpath(fileURLToPath(import.meta.url))),
+        'keys.d.ts',
+    )
 
     const runWatch = async () => {
         if (WATCH) {

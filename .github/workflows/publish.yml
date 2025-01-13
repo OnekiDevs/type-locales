@@ -42,16 +42,11 @@ jobs:
 
             # 6. Crear una nueva release en GitHub
             - name: Create GitHub Release
-              id: create_release
-              uses: actions/create-release@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+              uses: ncipollo/release-action@v1
               with:
-                  tag_name: v${{ env.version }}
-                  release_name: 'Release v${{ env.version }}'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  name: 'Release v${{ env.version }}'
                   body: ${{ env.changelog }}
-                  draft: false
-                  prerelease: false
 
             # 7. Publicar en npm
             - name: Publish to npm
