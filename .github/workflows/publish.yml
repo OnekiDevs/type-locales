@@ -49,7 +49,11 @@ jobs:
                   tag: v${{ env.version }}
                   body: ${{ env.changelog }}
 
-            # 7. Publicar en npm
+            # 7. Configurar el registro de npm
+            - name: Configure npm registry
+              run: npm config set registry https://registry.npmjs.org/
+
+            # 8. Publicar en npm
             - name: Publish to npm
               run: |
                   npm publish
