@@ -80,7 +80,7 @@ if (
         await import(import.meta.resolve('../package.json'), {
             with: { type: 'json' },
         }).then(i => {
-            console.log(`type-routes v${i.default.version}`)
+            console.log(`type-locales v${i.default.version}`)
         })
         process.exit(0)
     }
@@ -112,7 +112,7 @@ Options:
                 OUTPUT_DTS,
             })
                 .then(() => {
-                    if (!QUIET) console.log('[type-routes] Routes typed')
+                    if (!QUIET) console.log('[type-locales] Locales typed')
                     resolve()
                 })
                 .catch(error => {
@@ -123,7 +123,7 @@ Options:
                         !QUIET
                     )
                         console.error(
-                            `[type-routes] Error: ${INPUT_ROOT} does not exist or is not a directory`,
+                            `[type-locales] Error: ${INPUT_ROOT} does not exist or is not a directory`,
                         )
                     if (
                         (error as Error).message.includes(
@@ -164,7 +164,7 @@ Options:
                     )
                 ) {
                     console.error(
-                        `[type-routes] Error: ${INPUT_ROOT} does not exist or is not a directory`,
+                        `[type-locales] Error: ${INPUT_ROOT} does not exist or is not a directory`,
                     )
                 }
             }

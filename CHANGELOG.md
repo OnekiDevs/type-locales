@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# 3.1.1
+
+## Fix
+
+-   **log** Fix logs
+
 # 3.1.0
 
 ## Features
@@ -12,7 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ## Features
 
--   **export keys** Now you can do `import { localeKeys } from 'type-routes'`
+-   **export keys** Now you can do `import { localeKeys } from 'type-locales'`
 
 ## Breaking Changues
 
