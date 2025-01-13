@@ -1,6 +1,6 @@
 {
   "name": "type-locales",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "A simple tool for typing your locales and a util for easy manage of i18n with typescript",
   "main": "build/mod.js",
   "bin": {
@@ -43,5 +43,8 @@
   "engineStrict": true,
   "engines": {
     "node": ">=20.11"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -2,11 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-# 3.1.1
+# 3.1.2
 
 ## Fix
 
--   **log** Fix logs
+-   **lk** New shortest export for `localeKeys`
 
 # 3.1.0
 
