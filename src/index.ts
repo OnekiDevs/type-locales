@@ -4,7 +4,7 @@ import { LocaleKeys } from './keys.js'
 type NestedKeyOf<T> = {
     [K in keyof T]: T[K] extends string
         ? T[K]
-        : `${K & string}.${NestedKeyOf<T[K]>}`
+        : `${NestedKeyOf<T[K]>}`
 }[keyof T]
 
 interface Translate<T extends LocaleKeys = LocaleKeys> {
