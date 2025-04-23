@@ -1,6 +1,6 @@
 {
   "name": "type-locales",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "A simple tool for typing your locales and a util for easy manage of i18n with typescript",
   "main": "build/mod.js",
   "bin": {

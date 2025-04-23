@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import { readdir, writeFile, watch, readFile, realpath } from 'node:fs/promises'
 import { parseArgs } from 'node:util'
 import { dirname, join } from 'node:path'
