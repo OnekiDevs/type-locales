@@ -2,9 +2,9 @@ import i18n from 'i18n'
 import { LocaleKeys } from './keys.js'
 
 type NestedKeyOf<T> = {
-    [K in keyof T]: T[K] extends string
-        ? T[K]
-        : `${NestedKeyOf<T[K]>}`
+    [K in keyof T]: T[K] extends string ? T[K]
+        : T[K] extends object ? NestedKeyOf<T[K]> 
+        : never
 }[keyof T]
 
 interface Translate<T extends LocaleKeys = LocaleKeys> {
