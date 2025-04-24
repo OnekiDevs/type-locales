@@ -10,7 +10,7 @@ type NestedKeyOf<T> = {
 interface Translate<T extends LocaleKeys = LocaleKeys> {
     <K extends NestedKeyOf<T>>(
         phrase: K,
-        options?: Record<string, string>,
+        options?: Record<string, string | number>,
     ): string
 }
 
